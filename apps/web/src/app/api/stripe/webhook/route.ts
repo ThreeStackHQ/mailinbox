@@ -6,10 +6,7 @@ import { eq } from "drizzle-orm";
 
 const webhookSecret = process.env["STRIPE_WEBHOOK_SECRET"];
 
-// Disable body parsing — Stripe needs the raw body for signature verification
-export const config = {
-  api: { bodyParser: false },
-};
+// App Router reads raw body via request.text() — no body parser config needed.
 
 export async function POST(req: NextRequest) {
   if (!webhookSecret) {

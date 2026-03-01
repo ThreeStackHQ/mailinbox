@@ -8,9 +8,9 @@
  * correctly return 401 until auth is wired up.
  */
 
-import NextAuth from "next-auth";
+import NextAuth, { type Session } from "next-auth";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+const nextAuth = NextAuth({
   session: { strategy: "jwt" },
   pages: {
     signIn: "/auth/login",
@@ -44,3 +44,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
  * - Add db lookup from @mailinbox/db
  * - Add rate limiting middleware
  */
+
+// Explicit type assertions to avoid "cannot be named" TS errors until Sprint 1.6 replaces this stub
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const handlers = nextAuth.handlers as any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const auth = nextAuth.auth as unknown as () => Promise<{ user: { id: string; email: string; name: string | null } } | null>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const signIn = nextAuth.signIn as any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const signOut = nextAuth.signOut as any;

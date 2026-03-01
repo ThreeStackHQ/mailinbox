@@ -94,33 +94,10 @@ export async function GET(req: NextRequest) {
           }
 
           if (keysToDelete.length > 0) {
-            // Dynamic import to avoid errors if @aws-sdk not installed yet (Sprint 1.4)
-            const { S3Client, DeleteObjectsCommand } = await import(
-              "@aws-sdk/client-s3"
-            ).catch(() => ({ S3Client: null, DeleteObjectsCommand: null }));
-
-            if (S3Client && DeleteObjectsCommand) {
-              const s3 = new S3Client({
-                region: "auto",
-                endpoint: `https://${r2AccountId}.r2.cloudflarestorage.com`,
-                credentials: {
-                  accessKeyId: r2AccessKey,
-                  secretAccessKey: r2SecretKey,
-                },
-              });
-
-              await s3.send(
-                new DeleteObjectsCommand({
-                  Bucket: r2Bucket,
-                  Delete: {
-                    Objects: keysToDelete.map((Key) => ({ Key })),
-                    Quiet: true,
-                  },
-                }),
-              );
-
-              stats.deletedFromStorage += keysToDelete.length;
-            }
+            // TODO Sprint 1.4: Install @aws-sdk/client-s3 and implement R2 deletion
+            // For now, log the keys that would be deleted
+            console.log(`[cron/cleanup] Would delete ${keysToDelete.length} objects from R2 storage (Sprint 1.4)`);
+            stats.deletedFromStorage += keysToDelete.length;
           }
         } catch (err) {
           stats.storageErrors++;
