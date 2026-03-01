@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { NextRequest, NextResponse } from "next/server";
 import { db, emails } from "@mailinbox/db";
 import { lt, or, isNotNull } from "drizzle-orm";

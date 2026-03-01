@@ -82,7 +82,7 @@ export type NewEmail = typeof emails.$inferInsert;
 export type Subscription = typeof subscriptions.$inferSelect;
 export type NewSubscription = typeof subscriptions.$inferInsert;
 
-interface Attachment {
+export interface Attachment {
   filename: string;
   contentType: string;
   sizeBytes: number;
