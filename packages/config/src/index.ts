@@ -12,6 +12,10 @@ export const APP_CONFIG = {
   url: process.env["NEXTAUTH_URL"] ?? "http://localhost:3000",
 } as const;
 
+// Convenience exports
+export const APP_URL = process.env["NEXTAUTH_URL"] ?? "https://mailinbox.threestack.io";
+export const EMAIL_RETENTION_DAYS = 7 as const;
+
 // SMTP configuration
 export const SMTP_CONFIG = {
   port: parseInt(process.env["SMTP_PORT"] ?? "2525", 10),
